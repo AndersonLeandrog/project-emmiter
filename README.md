@@ -1,79 +1,77 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+Seja bem vindo! Esse é o Emmiter um projeto de código aberto para o gerenciamento de clientes utilizando o React-Native e o Google Firebase/FireStorage.
 
-# Getting Started
+Se você deseja utilizar este aplicativo para o seu negócio siga as etapas abaixo:
 
->**Note**: Make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) instructions till "Creating a new application" step, before proceeding.
+1 - Certifique-se de ter todo o ambiente de desenvolvimento do react-native configurado na sua máquina [https://reactnative.dev/docs/getting-started]  
+2 - Baixe os arquivos do projeto ou crie um clone do projeto através do seu git, faça como preferir -  
+3 - Abra o projeto no seu diretório raiz onde estará localizado o "App.js" e em seguida execute o comando "npm install ou npm i" necessário para instalar
+todas as dependências que o projeto necessita para que possa ser executado sem nenhum erro e para que as suas funções funcionem devidamente.  
+4 - Execute o projeto na sua máquina usando os comando "npm start" e "npx react-native run-android" (no diretório raiz do projeto)  
+5 - Verifique se o projeto foi executado com sucesso ele irá carregar em um emulador no android studio ou você pode carregar diretamente de um dispositivo
+android externo que possua o android 9.0 ou superior, []    
 
-## Step 1: Start the Metro Server
+(Você precisará adicionar a sua própria "credencial" do google firebase/firestore para que os dados cadastrados dos usuários sejam armazenados na sua conta do
+google firebase)
 
-First, you will need to start **Metro**, the JavaScript _bundler_ that ships _with_ React Native.
+- Crie uma conta no google firebase se ainda não tiver [https://firebase.google.com/?hl=pt]
+- Clique em "Começar ou Start" e em seguida "adicione um novo projeto" dê um nome e ele recomendamos "emmiter",  
+- clique em "continuar" (não é necessário ativar o google Analitycs) assim que o seu projeto for criado, em "Visão Geral do Projeto > Configurações do Projeto"
+  na aba "Seus Aplicativos" selecione a plataforma "Web" para começar, geralmente tem o ícone "</>" dê um nome ao seu app da web, em seguida um código de autenticação
+  para o projeto que você acabou de criar no firebase será gerado, ele terá mais ou menos essa aparência:  
 
-To start Metro, run the following command from the _root_ of your React Native project:
+  ``  
+   import { initializeApp } from "firebase/app";  
+   // TODO: Add SDKs for Firebase products that you want to use  
+   // https://firebase.google.com/docs/web/setup#available-libraries  
+   
+   // Your web app's Firebase configuration  
+   const firebaseConfig = {  
+     apiKey: "AIzaSyDZ17hm5ZhoG4NqMD6IwkxxofogacvT3V4",  
+     authDomain: "testedid.firebaseapp.com",  
+     projectId: "testedid",  
+     storageBucket: "testedid.appspot.com",  
+     messagingSenderId: "608368870609",  
+     appId: "1:608368870609:web:07a71709ae54b8309ef1f0"  
+   };  
+   
+   // Initialize Firebase  
+   const app = initializeApp(firebaseConfig);  
+  ``  
+  
+- Copie o objeto "firebaseConfig" com as propriedades que foram fornecidas, acima temos somente um exemplo, os valores das propriedades serão diferentes para cada
+  projeto que for criado no firebase.  
+  
+- Agora abra, na raiz do app, o diretório "src/config/firebase.js" e substitua os dados do objeto "firebaseConfig" do app para os dados copiados do site.
+- Feito isso, salve o arquivo "firebase.js" e reinicie o projeto.  
 
-```bash
-# using npm
-npm start
+- ! Antes de fazer qualquer modificação como: Adicionar usuários, Editar ou Remover usuários, abra o console do firebase vá em "Firestore Database" e clique em
+  "Criar banco de dados", marque "Iniciar em modo Produção" e em "Next", selecione um local de armazenamento dos dados, recomendado "south-america" e clique em "Ativar",
+  aguarde um momento e clique em "Iniciar nova Coleção" no código da coleção digite "user" o código obrigatóriamente precisa ser "user" em letras minusculas, o mesmo vale
+  para o "ID do Documento" (Deixe os "Campos" e "Valores" vazios) e clique em "Salvar"  
 
-# OR using Yarn
-yarn start
-```
+- ! Abra a aba "Regras" e edite as regras para que fique assim:
+  (dessa maneira você permite tanto a leitura quanto a escrita no firestorage para qualquer pessoa, necessário para que o app funcione corretamente)  
+  
+``  
+   rules_version = '2';  
+   
+   service cloud.firestore {  
+     match /databases/{database}/documents {  
+       match /{document=**} {  
+         allow read, write: if true;  
+       }  
+     }  
+   }  
+``  
 
-## Step 2: Start your Application
+- ! Para testar se ocorreu tudo certo ao reiniciar o projeto no emulador ou em um dispositivo físico conectado externamente, abra a opção "Adicionar Usuário" no app
+  e em seguida adicione qualquer usuário para fins de teste, em "Gerenciar usuários" você terá acesso a todos os usuários cadastrados na sua conta do firebase.  
+   
+Você pode baixar o arquivo .apk para android [aqui] o arquivo é o com.android.emmiter atualmente na sua versão 1.2.14-7 Beta,
+(não é aconselhável usar este apk para armazenar os dados do seu cliente, ao invés disso siga a etapa para utilizar o aplicativo para o seu negócio)  
 
-Let Metro Bundler run in its _own_ terminal. Open a _new_ terminal from the _root_ of your React Native project. Run the following command to start your _Android_ or _iOS_ app:
-
-### For Android
-
-```bash
-# using npm
-npm run android
-
-# OR using Yarn
-yarn android
-```
-
-### For iOS
-
-```bash
-# using npm
-npm run ios
-
-# OR using Yarn
-yarn ios
-```
-
-If everything is set up _correctly_, you should see your new app running in your _Android Emulator_ or _iOS Simulator_ shortly provided you have set up your emulator/simulator correctly.
-
-This is one way to run your app — you can also run it directly from within Android Studio and Xcode respectively.
-
-## Step 3: Modifying your App
-
-Now that you have successfully run the app, let's modify it.
-
-1. Open `App.tsx` in your text editor of choice and edit some lines.
-2. For **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Developer Menu** (<kbd>Ctrl</kbd> + <kbd>M</kbd> (on Window and Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (on macOS)) to see your changes!
-
-   For **iOS**: Hit <kbd>Cmd ⌘</kbd> + <kbd>R</kbd> in your iOS Simulator to reload the app and see your changes!
-
-## Congratulations! :tada:
-
-You've successfully run and modified your React Native App. :partying_face:
-
-### Now what?
-
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [Introduction to React Native](https://reactnative.dev/docs/getting-started).
-
-# Troubleshooting
-
-If you can't get this to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
-
-# Learn More
-
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+Google Firebase: 
+- O apk com.android.emmiter está vinculado a conta do desenvolvedor @andersonleandrog portanto todos os clientes que você cadastrar será
+  inserido no firestorage do firebase na conta do mesmo, por esse motivo é recomendado que você siga a configuração para o seu negócio.  
+  
+Se você deseja utilizar este aplicativo para estudo ou modificações conforme o seu gosto siga esses etapas: []  
