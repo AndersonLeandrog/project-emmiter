@@ -6,7 +6,7 @@
 2 - Baixe os arquivos do projeto ou crie um clone do projeto através do seu git, faça como preferir -<br><br>
 3 - Abra o projeto no seu diretório raiz onde estará localizado o "App.js" e em seguida execute o comando "npm install ou npm i" necessário para instalar
 todas as dependências que o projeto necessita para que possa ser executado sem nenhum erro e para que as suas funções funcionem devidamente.<br><br>
-4 - Execute o projeto na sua máquina usando os comando "npm start" e "npx react-native run-android" (no diretório raiz do projeto)  
+4 - Execute o projeto na sua máquina usando os comando "npm start" e "npx react-native run-android" (no diretório raiz do projeto)<br><br>
 5 - Verifique se o projeto foi executado com sucesso ele irá carregar em um emulador no android studio ou você pode carregar diretamente de um dispositivo
 android externo que possua o android 9.0 ou superior, []<br><br>
 
