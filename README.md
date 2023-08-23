@@ -66,7 +66,7 @@ android externo que possua o android 9.0 ou superior, []<br><br>
 - ! Para testar se ocorreu tudo certo ao reiniciar o projeto no emulador ou em um dispositivo físico conectado externamente, abra a opção "Adicionar Usuário" no app
   e em seguida adicione qualquer usuário para fins de teste, em "Gerenciar usuários" você terá acesso a todos os usuários cadastrados na sua conta do firebase.  
    
-Você pode baixar o arquivo .apk para android [aqui] o arquivo é o com.android.emmiter atualmente na sua versão 1.2.14-7 Beta,
+Você pode baixar o arquivo .apk para android [https://github.com/AndersonLeandrog/project-emmiter/releases/tag/1.2.14-7] o arquivo é o com.android.emmiter atualmente na sua versão 1.2.14-7 Beta,
 (não é aconselhável usar este apk para armazenar os dados do seu cliente, ao invés disso siga a etapa para utilizar o aplicativo para o seu negócio)  
 
 Google Firebase: 
