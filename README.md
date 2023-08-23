@@ -1,23 +1,22 @@
-Seja bem vindo! Esse é o Emmiter um projeto de código aberto para o gerenciamento de clientes utilizando o React-Native e o Google Firebase/FireStorage.
+### Seja bem vindo! Esse é o Emmiter um projeto de código aberto para o gerenciamento de clientes utilizando o React-Native e o Google Firebase/FireStorage.
 
-Se você deseja utilizar este aplicativo para o seu negócio siga as etapas abaixo:
+#### Se você deseja utilizar este aplicativo para o seu negócio siga as etapas abaixo:
 
-1 - Certifique-se de ter todo o ambiente de desenvolvimento do react-native configurado na sua máquina [https://reactnative.dev/docs/getting-started]  
-2 - Baixe os arquivos do projeto ou crie um clone do projeto através do seu git, faça como preferir -  
+1 - Certifique-se de ter todo o ambiente de desenvolvimento do react-native configurado na sua máquina [https://reactnative.dev/docs/getting-started]<br><br> 
+2 - Baixe os arquivos do projeto ou crie um clone do projeto através do seu git, faça como preferir -<br><br>
 3 - Abra o projeto no seu diretório raiz onde estará localizado o "App.js" e em seguida execute o comando "npm install ou npm i" necessário para instalar
-todas as dependências que o projeto necessita para que possa ser executado sem nenhum erro e para que as suas funções funcionem devidamente.  
+todas as dependências que o projeto necessita para que possa ser executado sem nenhum erro e para que as suas funções funcionem devidamente.<br><br>
 4 - Execute o projeto na sua máquina usando os comando "npm start" e "npx react-native run-android" (no diretório raiz do projeto)  
 5 - Verifique se o projeto foi executado com sucesso ele irá carregar em um emulador no android studio ou você pode carregar diretamente de um dispositivo
-android externo que possua o android 9.0 ou superior, []    
+android externo que possua o android 9.0 ou superior, []<br><br>
 
-(Você precisará adicionar a sua própria "credencial" do google firebase/firestore para que os dados cadastrados dos usuários sejam armazenados na sua conta do
-google firebase)
+#### Você precisará adicionar a sua própria "credencial" do google firebase/firestore para que os dados cadastrados dos usuários sejam armazenados na sua conta do google firebase
 
-- Crie uma conta no google firebase se ainda não tiver [https://firebase.google.com/?hl=pt]
-- Clique em "Começar ou Start" e em seguida "adicione um novo projeto" dê um nome e ele recomendamos "emmiter",  
-- clique em "continuar" (não é necessário ativar o google Analitycs) assim que o seu projeto for criado, em "Visão Geral do Projeto > Configurações do Projeto"
+- Crie uma conta no google firebase se ainda não tiver [https://firebase.google.com/?hl=pt]<br>
+- Clique em "Começar ou Start" e em seguida "adicione um novo projeto" dê um nome e ele recomendamos "emmiter",
+- Clique em "continuar" (não é necessário ativar o google Analitycs) assim que o seu projeto for criado, em "Visão Geral do Projeto > Configurações do Projeto"
   na aba "Seus Aplicativos" selecione a plataforma "Web" para começar, geralmente tem o ícone "</>" dê um nome ao seu app da web, em seguida um código de autenticação
-  para o projeto que você acabou de criar no firebase será gerado, ele terá mais ou menos essa aparência:  
+  para o projeto que você acabou de criar no firebase será gerado, ele terá mais ou menos essa aparência:<br><br>
 
   ``  
    import { initializeApp } from "firebase/app";  
