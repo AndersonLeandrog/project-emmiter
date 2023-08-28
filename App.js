@@ -1,25 +1,29 @@
 import React, { useState, useEffect } from 'react';
 import { BackHandler } from 'react-native';
+
+// import { react-native-navigation e AsyncStorage }
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+const Stack = createNativeStackNavigator();
+
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import Welcome from './src/splashScreen/Screen1';
-import Tutorial from './src/splashScreen/Screen2';
+// import { arquivos de estilo }
+import colors from './src/config/colors';
+
+// import { arquivos de navegação }
+import ScreenA from './src/splashScreen/Screen1';
+import ScreenB from './src/splashScreen/Screen2';
 import Home from './src/mainScreen/Home';
 import AddUser from './src/mainScreen/Add';
 import UserList from './src/mainScreen/List';
 import Details from './src/mainScreen/Details';
 
-import colors from './src/config/colors';
-
-const Stack = createNativeStackNavigator();
-
 export default function App() {
-  const [route, setRoute] = useState('Welcome');
+  const [route, setRoute] = useState('ScreenA');
 
   useEffect(() => {
-    (async function getAsyncStorageData() {  
+    (async function getAsyncStorageData() {
       const screenState = await AsyncStorage.getItem('screen');
       const loadScreenState = await AsyncStorage.getItem('load');
       if (screenState === 'false' && loadScreenState === 'true') {
@@ -38,8 +42,8 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName={route}>
-        <Stack.Screen name='Welcome' component={Welcome} options={{headerShown: false }} />
-        <Stack.Screen name='Tutorial' component={Tutorial} options={{ headerShown: false }} />
+        <Stack.Screen name='ScreenA' component={ScreenA} options={{ headerShown: false }} />
+        <Stack.Screen name='ScreenB' component={ScreenB} options={{ headerShown: false }} />
 
         <Stack.Screen
           name='Home'
@@ -54,7 +58,7 @@ export default function App() {
           name='Add'
           component={AddUser}
           options={{
-            title: 'Adicionar um usuário',
+            title: 'Cadastrar novo usuário',
             headerTintColor: colors.black,
             headerStyle: {
               backgroundColor: colors.green,
@@ -78,7 +82,7 @@ export default function App() {
           name='Details'
           component={Details}
           options={{
-            title: 'detalhes',
+            title: 'Detalhes do usuário',
             headerTintColor: colors.black,
             headerStyle: {
               backgroundColor: colors.green,

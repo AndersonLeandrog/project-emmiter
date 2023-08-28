@@ -26,9 +26,20 @@ const styles = StyleSheet.create({
     input: {
         width: '100%',
         height: 50,
-        fontStyle: 'italic',
-        paddingLeft: 15,
         backgroundColor: color.inputBackgroundColor,
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    iconContainer: {
+        width: '10%',
+        height: 50,
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    textInput: {
+        width: '90%',
     },
     button: {
         width: 120,

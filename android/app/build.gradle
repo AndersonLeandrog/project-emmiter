@@ -79,7 +79,7 @@ android {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
-        versionName "1.2.14-7"
+        versionName "1.2.15-0"
         project.ext.vectoricons = [
             iconFontNames: [ 'AntDesign.ttf', 'Entypo.ttf' ] // Add more font files if needed
         ]

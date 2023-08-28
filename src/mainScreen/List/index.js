@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { SafeAreaView, ScrollView, View, Text, TouchableOpacity, FlatList } from 'react-native';
+import { Text, View, SafeAreaView, FlatList, TouchableOpacity } from 'react-native';
 
+// import { arquivos do firebase }
 import firestore from '../../config/firebase';
 import { collection, getDocs, getDoc, deleteDoc } from "firebase/firestore";
 
-// Arquivos de estilização do app
+// Imports { arquivos de estilo }
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import colors from "../../config/colors";
@@ -18,19 +19,18 @@ export default function UserList({ navigation }) {
          const querySnapshot = await getDocs(collection(firestore, user));
          const usersData = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
          setRecoveredData(usersData);
-         
+
          // Verifica o número de usuários que já foram cadastrados
          // armazena o número de usuários cadastrados no AsyncStorage (Serão retornados na tela Home)
          const totalUsersNumber = usersData.length; // Calcula o número de usuários cadastrados
-         // navigation.getParam('Emmiter', {totalUsers: totalUsersNumber});
-         
+
          // Verifica o número de usuários masculinos e femininos que já foram cadastrados
          // armazena o número de usuários masculinos e femininos que já foram cadastrados no AsyncStorage
          usersData.forEach(async (number, index) => {
             const userBySex = usersData[index].gender;
-            if(userBySex === 'masculino' || userBySex === 'Masculino') {
+            if (userBySex === 'masculino' || userBySex === 'Masculino') {
                await AsyncStorage.setItem('totalMasculineUsersNumber', String(index));
-            } else if(userBySex === 'feminino' || userBySex === 'Feminino') {
+            } else if (userBySex === 'feminino' || userBySex === 'Feminino') {
                await AsyncStorage.setItem('totalFeminineUsersNumber', String(index));
             }
          });
@@ -44,7 +44,7 @@ export default function UserList({ navigation }) {
 
    // O id é definido no AsyncStorage e fica disponível globalmente para toda
    // a aplicação através do método getItem() do AsyncStorage
-   async function sendDataToDetails(id) { 
+   async function sendDataToDetails(id) {
       try {
          await AsyncStorage.setItem('id', id);
          navigation.navigate('Details');
@@ -53,46 +53,52 @@ export default function UserList({ navigation }) {
       }
    };
 
-   const loadList = () => {
+   function loadList() {
       return (
          <FlatList
-         data={recoveredData}
-         keyExtractor={item => item.id}
-         renderItem={({ item }) => (
-            <TouchableOpacity
-               onPress={() => {
-                  sendDataToDetails(item.id);
-               }}
-               style={{
-                  width: 320,
-                  marginTop: 15,
-                  borderRadius: 10,
-                  backgroundColor: colors.whiteSmoke,
-                  display: 'flex',
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                  alignItems: 'center'
-               }}
-            >
-               <View>
-                  <Text 
+            data={recoveredData}
+            keyExtractor={item => item.id}
+            renderItem={({ item }) => (
+               <TouchableOpacity
+                  onPress={() => {
+                     sendDataToDetails(item.id);
+                  }}
                   style={{
-                     color: colors.green,
-                     paddingTop: 10,
-                     paddingLeft: 10
-                  }}>{'ID: ' + item.id}</Text>
-                  <Text style={{ paddingLeft: 10, paddingBottom: 10, color: colors.black}}>{'Nome: ' + item.name}</Text>
-               </View>
-            </TouchableOpacity>
-         )}/>
+                     width: '100%',
+                     marginTop: 15,
+                     display: 'flex',
+                     justifyContent: 'space-between',
+                     alignItems: 'center'
+                  }}
+               >
+                  <View style={styles.flatListContainer}>
+                     <View style={styles.iconContainer}>
+                        <AntDesign name='solution1' size={24} color={colors.black} />
+                     </View>
+
+                     <View>
+                        <Text
+                           style={{
+                              color: colors.green,
+                              paddingTop: 10,
+                              paddingLeft: 10
+                           }}>{'ID: ' + item.id}</Text>
+                        <Text style={{ paddingLeft: 10, paddingBottom: 10, color: colors.black }}>{'Nome: ' + item.name}</Text>
+                     </View>
+                  </View>
+               </TouchableOpacity>
+            )}
+            style={{ width: '90%', marginTop: 30 }}
+         />
       )
    };
 
-   const loadListError = () => {
+   // Retorna o componente caso 
+   function loadListError() {
       return (
-         <View style={{display: 'flex', flexDirection: 'colunm', justifyContent: 'center', alignItems: 'center', marginTop: 100}}>
-            <AntDesign name='meh' size={64} color='#000' />
-            <Text style={{fontStyle: 'italic', color: '#000', paddingTop: 25, textAlign: 'center'}}>
+         <View style={{ display: 'flex', flexDirection: 'colunm', justifyContent: 'center', alignItems: 'center', marginTop: 100 }}>
+            <AntDesign name='meh' size={64} color={colors.black} />
+            <Text style={{ fontStyle: 'italic', color: colors.black, paddingTop: 25, textAlign: 'center' }}>
                {
                   'Não há nada aqui!\n' +
                   'Para adicionar um usuário,\n' +
@@ -106,9 +112,9 @@ export default function UserList({ navigation }) {
 
    return (
       <SafeAreaView>
-         <ScrollView>
-            <View style={styles.container}>{ recoveredData.length > 0 ? loadList() : loadListError() }</View>
-         </ScrollView>
+         <View style={styles.container}>
+            {recoveredData.length > 0 ? loadList() : loadListError()}
+         </View>
       </SafeAreaView>
    );
 };
