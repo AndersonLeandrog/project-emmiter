@@ -79,9 +79,9 @@ android {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
-        versionName "1.2.15-0"
+        versionName "1.2.15-1"
         project.ext.vectoricons = [
-            iconFontNames: [ 'AntDesign.ttf', 'Entypo.ttf' ] // Add more font files if needed
+            iconFontNames: [ 'AntDesign.ttf', 'Entypo.ttf', 'Feather.ttf' ] // Add more font files if needed
         ]
     }
     signingConfigs {
@@ -124,7 +124,7 @@ dependencies {
 }
 
 project.ext.vectoricons = [
-    iconFontNames: [ 'MaterialIcons.ttf', 'EvilIcons.ttf','Ionicons.ttf', 'AntDesign.ttf', 'Entypo.tff' ] // Nome dos arquivos de fonte que você deseja copiar
+    iconFontNames: [ 'MaterialIcons.ttf', 'EvilIcons.ttf','Ionicons.ttf', 'AntDesign.ttf', 'Entypo.tff', 'Feather.tff' ] // Nome dos arquivos de fonte que você deseja copiar
 ]
 apply from: file("../../node_modules/react-native-vector-icons/fonts.gradle")
 apply from: file("../../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesAppBuildGradle(project)

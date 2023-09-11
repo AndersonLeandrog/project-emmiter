@@ -1,17 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { BackHandler } from 'react-native';
 
-// import { react-native-navigation e AsyncStorage }
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 const Stack = createNativeStackNavigator();
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
-// import { arquivos de estilo }
 import colors from './src/config/colors';
 
-// import { arquivos de navegação }
+import LoadIcon from './src/splashScreen/LoadIcon';
 import ScreenA from './src/splashScreen/Screen1';
 import ScreenB from './src/splashScreen/Screen2';
 import Home from './src/mainScreen/Home';
@@ -20,28 +17,25 @@ import UserList from './src/mainScreen/List';
 import Details from './src/mainScreen/Details';
 
 export default function App() {
-  const [route, setRoute] = useState('ScreenA');
+  const [initialRoute, setInitialRoute] = useState('LoadIcon');
 
   useEffect(() => {
-    (async function getAsyncStorageData() {
-      const screenState = await AsyncStorage.getItem('screen');
-      const loadScreenState = await AsyncStorage.getItem('load');
-      if (screenState === 'false' && loadScreenState === 'true') {
-        // Previne que o usuário volte pressionando o botão de voltar do smartphone para
-        // as telas definidas na pasta splashScreen
-        BackHandler.addEventListener('hardwareBackPress', () => true);
-        return () => BackHandler.removeEventListener('hardwareBackPress', () => true);
+    BackHandler.addEventListener('hardwareBackPress', () => true);
 
-        // Após inicializar o aplicativo pela primeira vez, 
-        // ele passará a iniciar por padrão na tela 'Home' em vez de iniciar renderizando a tela de boas-vindas 'Welcome'
-        setRoute('Home');
+    (async function getAsyncStorageData() {
+      const splashScreen = await AsyncStorage.getItem('showSplashScreen');
+      if (splashScreen === 'Home') {
+        setInitialRoute('Home');
       }
     })();
+
+    return () => BackHandler.removeEventListener('hardwareBackPress', () => true);
   }, []);
 
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName={route}>
+      <Stack.Navigator initialRouteName={initialRoute}>
+        <Stack.Screen name='LoadIcon' component={LoadIcon} options={{ headerShown: false }} />
         <Stack.Screen name='ScreenA' component={ScreenA} options={{ headerShown: false }} />
         <Stack.Screen name='ScreenB' component={ScreenB} options={{ headerShown: false }} />
 
@@ -58,10 +52,10 @@ export default function App() {
           name='Add'
           component={AddUser}
           options={{
-            title: 'Cadastrar novo usuário',
-            headerTintColor: colors.black,
+            title: 'Adicionar um novo usuário',
+            headerTintColor: colors.white,
             headerStyle: {
-              backgroundColor: colors.green,
+              backgroundColor: colors.blue,
             }
           }}
         />
@@ -71,9 +65,9 @@ export default function App() {
           component={UserList}
           options={{
             title: 'Lista de usuários',
-            headerTintColor: colors.black,
+            headerTintColor: colors.white,
             headerStyle: {
-              backgroundColor: colors.green,
+              backgroundColor: colors.blue,
             }
           }}
         />
@@ -83,13 +77,13 @@ export default function App() {
           component={Details}
           options={{
             title: 'Detalhes do usuário',
-            headerTintColor: colors.black,
+            headerTintColor: colors.white,
             headerStyle: {
-              backgroundColor: colors.green,
+              backgroundColor: colors.blue,
             }
           }}
         />
       </Stack.Navigator>
     </NavigationContainer>
   )
-}
+};

@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Text, View, SafeAreaView, FlatList, TouchableOpacity } from 'react-native';
 
-// import { arquivos do firebase }
 import firestore from '../../config/firebase';
 import { collection, getDocs, getDoc, deleteDoc } from "firebase/firestore";
-
-// Imports { arquivos de estilo }
 import AsyncStorage from '@react-native-async-storage/async-storage';
+
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import colors from "../../config/colors";
 import styles from "./style";
@@ -79,7 +77,7 @@ export default function UserList({ navigation }) {
                      <View>
                         <Text
                            style={{
-                              color: colors.green,
+                              color: colors.blue,
                               paddingTop: 10,
                               paddingLeft: 10
                            }}>{'ID: ' + item.id}</Text>
@@ -96,7 +94,14 @@ export default function UserList({ navigation }) {
    // Retorna o componente caso 
    function loadListError() {
       return (
-         <View style={{ display: 'flex', flexDirection: 'colunm', justifyContent: 'center', alignItems: 'center', marginTop: 100 }}>
+         <View
+            style={{
+               display: 'flex',
+               flexDirection: 'colunm',
+               justifyContent: 'center',
+               alignItems: 'center',
+            }}
+         >
             <AntDesign name='meh' size={64} color={colors.black} />
             <Text style={{ fontStyle: 'italic', color: colors.black, paddingTop: 25, textAlign: 'center' }}>
                {

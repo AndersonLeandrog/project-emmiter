@@ -1,18 +1,16 @@
 import React, { useState } from "react";
-import { SafeAreaView, ScrollView, View, Text, TouchableOpacity, TextInput, Button } from 'react-native';
+import { SafeAreaView, ScrollView, View, Text, TouchableOpacity, TextInput } from 'react-native';
 
-// import { arquivos do firebase/firestore e react-native-picker }
 import firestore from '../../config/firebase';
 import { collection, doc, setDoc } from "firebase/firestore";
 import { Picker } from "@react-native-picker/picker";
 
-// Imports { arquivos de estilo }
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import colors from "../../config/colors";
 import styles from "./style";
 
 export default function AddUser({ navigation }) {
-    const [add, setAdd] = useState('');
+    {/* Statements, Informações de cadastro do usuário */ }
     const [name, setName] = useState('');
     const [bornDate, setBornDate] = useState();
     const [gender, setGender] = useState('Masculino');
@@ -26,11 +24,8 @@ export default function AddUser({ navigation }) {
     const [dateIn, setDateIn] = useState();
     const [dateOut, setDateOut] = useState();
 
-    const [buttonDisable, setButtonDisable] = useState(false);
-
     const [tempName, setTempName] = useState('');
     const [tempBornDate, setTempBornDate] = useState('');
-    const [tempGender, setTempGender] = useState('');
     const [tempDocument, setTempDocument] = useState('');
     const [tempAddress, setTempAddress] = useState('');
     const [tempCity, setTempCity] = useState('');
@@ -393,17 +388,13 @@ export default function AddUser({ navigation }) {
                     </View>
 
                     <TouchableOpacity
-                        disabled={buttonDisable}
                         onPress={() => {
-                            setAdd(true);
                             register(name, bornDate, gender, document, adress, city, phone, email, model, serialNumber, dateIn, dateOut);
                         }}
                         style={{ ...styles.button, marginTop: 35, marginBottom: 100 }}
                     >
-                        <Text style={{ ...styles.iconButton, color: colors.black }}>
-                            <AntDesign name='edit' size={24} color={colors.black} />
-                            {' Cadastrar '}
-                        </Text>
+                        <AntDesign name='edit' size={24} color={colors.white} />
+                        <Text style={{ ...styles.iconButton, color: colors.white }}>{' Cadastrar '}</Text>
                     </TouchableOpacity>
                 </View>
             </ScrollView>

@@ -1,25 +1,28 @@
 import React from 'react';
 import { View, SafeAreaView, StatusBar, ScrollView } from 'react-native';
-import styles from './style'
 
-// Import dos módulos da página inicial do app
-import LogoWidget from './components/tools/LogoWidget';
-import ClockWidget from './components/tools/ClockWidget';
-import Shortcuts from './components/tools/Shortcuts';
-import GraphWidget from './components/tools/GraphWidget';
+import Logo from './components/tools/logo/Logo';
+import Guide from './components/tools/guide/Guide';
+import Clock from './components/tools/clock/Clock';
+import Shortcuts from './components/tools/shortcut/Shortcuts';
+import Graphic from './components/tools/graphics/Graphics';
 import Banner from './components/contribute/Banner';
-import Social from './components/tools/SocialWidget';
+import Social from './components/tools/social/Social';
+
+import colors from '../../config/colors';
+import styles from './style'
 
 export default function Home() {
   return (
     <SafeAreaView>
-      <StatusBar barStyle={'dark-content'} backgroundColor='#29EF60' />
+      <StatusBar barStyle={'dark-content'} backgroundColor={colors.blue} />
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.container}>
-          <LogoWidget />
-          <ClockWidget />
+          <Logo />
+          <Guide />
+          <Clock />
           <Shortcuts />
-          <GraphWidget />
+          <Graphic />
           <Banner />
           <Social />
         </View>

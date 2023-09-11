@@ -13,11 +13,26 @@ const styles = StyleSheet.create({
    userBox: {
       width: '90%',
       height: 750,
-      borderRadius: 10,
+      borderWidth: 1,
+      borderStyle: 'dashed',
+      borderColor: colors.lightBlack,
       backgroundColor: colors.whiteSmoke,
       display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center'
+      justifyContent: 'flex-start',
+      alignItems: 'center',
+   },
+   title: {
+      fontFamily: 'Times New Roman, Arial, Calibri',
+      fontSize: 23,
+      paddingLeft: 25,
+      paddingTop: 25,
+      color: colors.black,
+   },
+   text: {
+      fontFamily: 'Times New Roman, Arial, Calibri',
+      fontSize: 14,
+      paddingLeft: 25,
+      color: colors.black
    },
    buttonBox: {
       width: '90%',
@@ -29,11 +44,12 @@ const styles = StyleSheet.create({
       alignItems: 'center'
    },
    input: {
+      fontFamily: 'Times New Roman, Arial, Calibri',
+      fontWeight: '500',
+      color: colors.lightBlack,
+      paddingLeft: 10,
       width: '90%',
-      height: 50,
-      borderRadius: 15,
-      marginTop: 5,
-      backgroundColor: colors.whiteSmoke
+      height: 35,
    }
 });
 

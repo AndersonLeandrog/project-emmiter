@@ -1,32 +1,33 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Text, TouchableOpacity } from 'react-native';
+import app from '../../../../../context';
+
 import Clipboard from '@react-native-clipboard/clipboard';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import colors from '../../../../config/colors';
 
 export default function Pix() {
+   // Obtém os dados do contexto
+   const context = useContext(app);
+   const { appSocialInfo } = context;
 
-   function ClipboardKey() { 
-      // Copia o conteúdo para a área de transferência
-      Clipboard.setString('3cdd66ab-6aa8-4761-bb98-4a48f94ea8aa')
-   };
-
-   const color = {
-      textColor: '#000',
-      buttonBackground: '#ebebeb'
+   // Copia o conteúdo para a área de transferência
+   function ClipboardKey() {
+      Clipboard.setString(appSocialInfo.pixKey)
    };
 
    return (
       <TouchableOpacity onPress={() => ClipboardKey()}>
-         <Text 
+         <Text
             style={{
                fontSize: 14,
-               padding: 10, 
-               color: color.textColor,
+               padding: 10,
+               color: colors.black,
                marginTop: 5,
-               backgroundColor: color.buttonBackground,
+               backgroundColor: colors.whiteSmoke,
             }}>
-            <AntDesign name='copy1' size={24} color={color.textColor} />
-            {'  3cdd66ab-6aa8-4761-bb98-4a48f94ea8aa'}
+            <AntDesign name='copy1' size={24} color={colors.black} />
+            {appSocialInfo.pixKey}
          </Text>
       </TouchableOpacity>
    );

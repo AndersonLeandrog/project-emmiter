@@ -1,10 +1,16 @@
-import React, { useState, useEffect } from "react";
-import { SafeAreaView, ScrollView, View, Text, TouchableOpacity, Share, TextInput } from 'react-native';
+import React, { useState, useEffect, useRef } from "react";
+import { SafeAreaView, ScrollView, View, Text, TouchableOpacity, TextInput } from 'react-native';
 
 // import { arquivos do firebase/firestore e AsyncStorage }
 import firestore from '../../config/firebase';
 import { collection, doc, getDoc, deleteDoc, setDoc } from "firebase/firestore";
 import AsyncStorage from '@react-native-async-storage/async-storage';
+
+import RNFS from 'react-native-fs';
+import ViewShot from "react-native-view-shot";
+import Share from 'react-native-share';
+import QRCode from "react-native-qrcode-svg";
+
 
 // import { arquivos de estilo }
 import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -16,6 +22,7 @@ export default function Details({ navigation }) {
    const [recoveredId, setRecoveredId] = useState('');
    const [isEditable, setisEditable] = useState(false);
    const [isRegister, setIsRegister] = useState(false);
+   const [generatedImageURI, setGeneratedImageURI] = useState('');
 
    const clientRef = collection(firestore, 'user');
 
@@ -95,123 +102,211 @@ export default function Details({ navigation }) {
       }
    };
 
+   const viewShotRef = useRef();
+
+   async function screenShotCapture() {
+      try {
+         const uri = await viewShotRef.current.capture(); // Captura o componente dentro da ViewShot usando react-native-view-shot
+         setGeneratedImageURI(uri); // Atribui a imagem capturada do componente ao componente de Imagem <Image/>
+      } catch (error) {
+         console.log('Houve um erro ao capturar a imagem: ', error);
+      }
+   };
+
+   // Função para compartilhar a imagem da nota capturada.
+   // ao tocar em compartilhar e salvar  no armazenamento do aplicativo em: 0/android/data/com.emmiter/files/*imagem.png*
+   async function shareImage() {
+
+      // Compartilha a Imagem
+      try {
+         // Abre a opção de compartilhar passando as propriedades do Objeto 
+         await Share.open({
+            title: 'Arquivo de nota do Emmiter',
+            url: generatedImageURI,
+            type: 'image/png',
+         });
+      } catch (error) {
+         console.log('Houve um erro ao compartilhar a imagem: ', error);
+      }
+
+      // Salva a imagem no armazenamento do aparelho
+      try {
+         // Gera um nome aleatório para a imagem
+         const randomNumber = Math.floor(Math.random() * 10000) + 1;
+
+         // Especifica a pasta para o local em que a imagem será salva.
+         const filePath = RNFS.ExternalDirectoryPath + '/SCREENSHOT_EMMITER_' + randomNumber + '.png';
+
+         // Move a imagem capturada para o caminho do arquivo especificada.
+         RNFS.moveFile(generatedImageURI, filePath);
+      } catch (error) {
+         console.log('Houve um erro ao salvar a imagem: ', error);
+      }
+   };
+
    return (
       <SafeAreaView>
          <ScrollView>
             <View style={styles.container}>
-               <TouchableOpacity
-                  onPress={() => {/*detalhes sobre o usuário*/ }}
-                  style={{ ...styles.userBox, marginTop: 50 }}
+               <ViewShot
+                  ref={viewShotRef}
+                  style={{
+                     width: '95%',
+                     display: 'flex',
+                     justifyContent: 'center',
+                     alignItems: 'center',
+                  }}
                >
+                  <TouchableOpacity
+                     onPress={() => {/*detalhes sobre o usuário*/ }}
+                     style={{ ...styles.userBox, marginTop: 50 }}
+                  >
+                     <View style={{ width: '100%' }}>
+                        <Text style={styles.title}>{'Emmiter'}</Text>
+                     </View>
 
-                  <TextInput
-                     value={'ID: ' + recoveredId}
-                     editable={isEditable}
-                     onChangeText={(text) => { isRegister ? updatedUserData.id = text : null }}
-                     style={{ ...styles.input, fontStyle: 'italic', color: colors.black, paddingLeft: 10 }}
-                  />
+                     <View style={{ width: '100%' }} >
+                        <Text style={styles.text}>
+                           {'Abaixo estão todos os dados do usuário, edite a nota tocando no botão de editar e em seguida toque na propriedade que deseja editar.'}
+                        </Text>
+                     </View>
 
-                  <TextInput
-                     value={recoveredData.name}
-                     editable={isEditable}
-                     onChangeText={(text) => { isRegister ? updatedUserData.name = text : null }}
-                     style={{ ...styles.input, fontStyle: 'italic', color: colors.black, paddingLeft: 10 }}
-                  />
+                     <TextInput
+                        value={'ID: ' + recoveredId}
+                        editable={isEditable}
+                        onChangeText={(text) => { isRegister ? updatedUserData.id = text : null }}
+                        style={{ ...styles.input, marginTop: 25 }}
+                     />
 
-                  <TextInput
-                     value={recoveredData.born}
-                     editable={isEditable}
-                     onChangeText={(text) => { isRegister ? updatedUserData.born = text : null }}
-                     style={{ ...styles.input, fontStyle: 'italic', color: colors.black, paddingLeft: 10 }}
-                  />
+                     <TextInput
+                        value={'Nome: ' + recoveredData.name}
+                        editable={isEditable}
+                        onChangeText={(text) => { isRegister ? updatedUserData.name = text : null }}
+                        style={styles.input}
+                     />
 
-                  <TextInput
-                     value={recoveredData.gender}
-                     editable={isEditable}
-                     onChangeText={(text) => { isRegister ? updatedUserData.gender = text : null }}
-                     style={{ ...styles.input, fontStyle: 'italic', color: colors.black, paddingLeft: 10 }}
-                  />
+                     <TextInput
+                        value={'Data de Nascimento: ' + recoveredData.born}
+                        editable={isEditable}
+                        onChangeText={(text) => { isRegister ? updatedUserData.born = text : null }}
+                        style={styles.input}
+                     />
 
-                  <TextInput
-                     value={recoveredData.document}
-                     editable={isEditable}
-                     onChangeText={(text) => { isRegister ? updatedUserData.document = text : null }}
-                     style={{ ...styles.input, fontStyle: 'italic', color: colors.black, paddingLeft: 10 }}
-                  />
+                     <TextInput
+                        value={'Sexo: ' + recoveredData.gender}
+                        editable={isEditable}
+                        onChangeText={(text) => { isRegister ? updatedUserData.gender = text : null }}
+                        style={styles.input}
+                     />
 
-                  <TextInput
-                     value={recoveredData.adress}
-                     editable={isEditable}
-                     onChangeText={(text) => { isRegister ? updatedUserData.adress = text : null }}
-                     style={{ ...styles.input, fontStyle: 'italic', color: colors.black, paddingLeft: 10 }}
-                  />
+                     <TextInput
+                        value={'Documento: ' + recoveredData.document}
+                        editable={isEditable}
+                        onChangeText={(text) => { isRegister ? updatedUserData.document = text : null }}
+                        style={styles.input}
+                     />
 
-                  <TextInput
-                     value={recoveredData.city}
-                     editable={isEditable}
-                     onChangeText={(text) => { isRegister ? updatedUserData.city = text : text }}
-                     style={{ ...styles.input, fontStyle: 'italic', color: colors.black, paddingLeft: 10 }}
-                  />
+                     <TextInput
+                        value={'Endereço: ' + recoveredData.adress}
+                        editable={isEditable}
+                        onChangeText={(text) => { isRegister ? updatedUserData.adress = text : null }}
+                        style={styles.input}
+                     />
 
-                  <TextInput
-                     value={recoveredData.phone}
-                     editable={isEditable}
-                     onChangeText={(text) => { isRegister ? updatedUserData.phone = text : text }}
-                     style={{ ...styles.input, fontStyle: 'italic', color: colors.black, paddingLeft: 10 }}
-                  />
+                     <TextInput
+                        value={'Cidade e Estado: ' + recoveredData.city}
+                        editable={isEditable}
+                        onChangeText={(text) => { isRegister ? updatedUserData.city = text : text }}
+                        style={styles.input}
+                     />
 
-                  <TextInput
-                     value={recoveredData.email}
-                     editable={isEditable}
-                     onChangeText={(text) => { isRegister ? updatedUserData.email = text : text }}
-                     style={{ ...styles.input, fontStyle: 'italic', color: colors.black, paddingLeft: 10 }}
-                  />
+                     <TextInput
+                        value={'Telefone: ' + recoveredData.phone}
+                        editable={isEditable}
+                        onChangeText={(text) => { isRegister ? updatedUserData.phone = text : text }}
+                        style={styles.input}
+                     />
 
-                  <TextInput
-                     value={recoveredData.model}
-                     editable={isEditable}
-                     onChangeText={(text) => { isRegister ? updatedUserData.model = text : text }}
-                     style={{ ...styles.input, fontStyle: 'italic', color: colors.black, paddingLeft: 10 }}
-                  />
+                     <TextInput
+                        value={'Email: ' + recoveredData.email}
+                        editable={isEditable}
+                        onChangeText={(text) => { isRegister ? updatedUserData.email = text : text }}
+                        style={styles.input}
+                     />
 
-                  <TextInput
-                     value={recoveredData.serialNumber}
-                     editable={isEditable}
-                     onChangeText={(text) => { isRegister ? updatedUserData.serialNumber = text : text }}
-                     style={{ ...styles.input, fontStyle: 'italic', color: colors.black, paddingLeft: 10 }}
-                  />
+                     <TextInput
+                        value={'Modelo do aparelho: ' + recoveredData.model}
+                        editable={isEditable}
+                        onChangeText={(text) => { isRegister ? updatedUserData.model = text : text }}
+                        style={styles.input}
+                     />
 
-                  <TextInput
-                     value={recoveredData.dateIn}
-                     editable={isEditable}
-                     onChangeText={(text) => { isRegister ? updatedUserData.dateIn = text : text }}
-                     style={{ ...styles.input, fontStyle: 'italic', color: colors.black, paddingLeft: 10 }}
-                  />
+                     <TextInput
+                        value={'Número de Série: ' + recoveredData.serialNumber}
+                        editable={isEditable}
+                        onChangeText={(text) => { isRegister ? updatedUserData.serialNumber = text : text }}
+                        style={styles.input}
+                     />
 
-                  <TextInput
-                     value={recoveredData.dateOut}
-                     editable={isEditable}
-                     onChangeText={(text) => { isRegister ? updatedUserData.dateOut = text : text }}
-                     style={{ ...styles.input, fontStyle: 'italic', color: colors.black, paddingLeft: 10 }}
-                  />
-               </TouchableOpacity>
+                     <TextInput
+                        value={'Data de Entrada: ' + recoveredData.dateIn}
+                        editable={isEditable}
+                        onChangeText={(text) => { isRegister ? updatedUserData.dateIn = text : text }}
+                        style={styles.input}
+                     />
+
+                     <TextInput
+                        value={'Data de Saída: ' + recoveredData.dateOut}
+                        editable={isEditable}
+                        onChangeText={(text) => { isRegister ? updatedUserData.dateOut = text : text }}
+                        style={styles.input}
+                     />
+
+                     <View
+                        style={{
+                           width: '100%',
+                           marginTop: 20,
+                           display: 'flex',
+                           flexDirection: 'row',
+                           justifyContent: 'space-evenly',
+                        }}
+                     >
+                        <View
+                           style={{
+                              width: 120,
+                              height: 140,
+                              display: 'flex',
+                              justifyContent: 'flex-start',
+                              alignItems: 'center',
+                           }}
+                        >
+                           {generatedImageURI.length > 0 ? (
+                              <QRCode
+                                 value={generatedImageURI}
+                                 size={115}
+                              />
+                           ) : null}
+                        </View>
+
+                        <View style={{ width: 200 }}>
+                           <Text style={{ ...styles.text, paddingLeft: 0 }}>
+                              {'Este é o QR para o documento, escaneie com  um aplicativo para QRCode.'}
+                           </Text>
+                        </View>
+                     </View>
+                  </TouchableOpacity>
+               </ViewShot>
 
                <TouchableOpacity
-                  disabled={true}
-                  onPress={() => {/*detalhes sobre o usuário*/ }}
-                  style={{ ...styles.buttonBox, marginTop: 25, backgroundColor: colors.whiteSmoke }}
-               >
-                  <AntDesign name='export' size={24} color={colors.black} />
-                  <Text style={{ color: colors.black }}> Compartilhar (em breve)</Text>
-               </TouchableOpacity>
-
-               <TouchableOpacity
-                  disabled={true}
-                  onPress={() => {/*detalhes sobre o usuário*/ }}
+                  disabled={false}
+                  onPress={() => {
+                     screenShotCapture();
+                     shareImage();
+                  }}
                   style={{ ...styles.buttonBox, marginTop: 8, backgroundColor: colors.whiteSmoke }}
                >
-                  <AntDesign name='qrcode' size={24} color={colors.black} />
-                  <Text style={{ color: colors.black }}> Ler código QR (em breve)</Text>
+                  <AntDesign name='export' size={24} color={colors.black} />
+                  <Text style={{ color: colors.black }}> Compartilhar & Salvar</Text>
                </TouchableOpacity>
 
                <TouchableOpacity
@@ -229,7 +324,7 @@ export default function Details({ navigation }) {
                      setIsRegister(true);
                      setTimeout(() => { editUserSelected(updatedUserData) }, 1000);
                   }}
-                  style={{ ...styles.buttonBox, marginTop: 10, backgroundColor: colors.green }}
+                  style={{ ...styles.buttonBox, marginTop: 10, backgroundColor: colors.blue }}
                >
                   <AntDesign name='save' size={24} color={colors.white} />
                   <Text style={{ color: colors.white }}> Salvar alterações (em breve)</Text>
@@ -244,6 +339,6 @@ export default function Details({ navigation }) {
                </TouchableOpacity>
             </View>
          </ScrollView>
-      </SafeAreaView>
+      </SafeAreaView >
    );
 };

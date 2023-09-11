@@ -1,18 +1,11 @@
 import { StyleSheet } from "react-native";
-
-// Define as cores padrão do aplicativo
-const color = {
-    background: '#fff',
-    itemBackground: '#1b1c20',
-    inputBackgroundColor: '#ebebeb',
-    button: '#29EF60'
-};
+import colors from "../../config/colors";
 
 const styles = StyleSheet.create({
     container: {
         width: '100%',
         height: '100%',
-        backgroundColor: color.background,
+        backgroundColor: colors.white,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center'
@@ -26,7 +19,7 @@ const styles = StyleSheet.create({
     input: {
         width: '100%',
         height: 50,
-        backgroundColor: color.inputBackgroundColor,
+        backgroundColor: colors.whiteSmoke,
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
@@ -45,8 +38,9 @@ const styles = StyleSheet.create({
         width: 120,
         height: 50,
         borderRadius: 10,
-        backgroundColor: color.button,
+        backgroundColor: colors.blue,
         display: 'flex',
+        flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
     }
