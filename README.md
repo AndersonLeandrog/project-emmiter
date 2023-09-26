@@ -1,6 +1,7 @@
 ## Seja bem vindo!<br>
-### Esse é o Emmiter um projeto de código aberto <br> para o gerenciamento de clientes utilizando o React-Native e o Google Firebase/FireStorage.
+### Esse é o Emmiter um projeto de código aberto <br> para o gerenciamento de clientes utilizando o React-Native e o Google Firebase/FireStorage.<br><br>
 
+### Veja o vídeo abaixo clicando na imagem para saber mais sobre o projeto!
 [![Nome do Vídeo](https://i.ibb.co/jG5k9XF/Novo-App-para-gerir-clientes.png)](https://www.youtube.com/watch?v=keo9J_Zf8Ec)
 
 - #### Se você deseja utilizar este aplicativo para o seu negócio siga as etapas abaixo:<br><br>
