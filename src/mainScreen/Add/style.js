@@ -5,10 +5,21 @@ const styles = StyleSheet.create({
     container: {
         width: '100%',
         height: '100%',
-        backgroundColor: colors.white,
+        backgroundColor: colors.wh0,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center'
+    },
+    boxInfo: {
+        width: 18,
+        height: 18,
+        borderRadius: 50,
+        backgroundColor: colors.bl0,
+    },
+    info: {
+        fontStyle: "italic",
+        paddingLeft: 5,
+        color: colors.bk1,
     },
     Information: {
         width: '85%',
@@ -19,7 +30,7 @@ const styles = StyleSheet.create({
     input: {
         width: '100%',
         height: 50,
-        backgroundColor: colors.whiteSmoke,
+        backgroundColor: colors.wh1,
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
@@ -38,7 +49,7 @@ const styles = StyleSheet.create({
         width: 120,
         height: 50,
         borderRadius: 10,
-        backgroundColor: colors.blue,
+        backgroundColor: colors.bl0,
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'center',

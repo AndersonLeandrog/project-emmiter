@@ -1,10 +1,8 @@
-// Importa os arquivos necessários para se comunicar com o google firebase/firestore
-// e realizar todas as modificações solicitadas pelos arquivos externos...
+// Importa os arquivos necessários para se comunicar com o google firebase.
+import { initializeApp } from "firebase/app";
+import { getFirestore } from "firebase/firestore";
 
-import { initializeApp } from 'firebase/app';
-import { getFirestore } from 'firebase/firestore';
-
-// Insira aqui o objeto contendo as propriedades para a sua conta do google firebase/firestore
+// Propriedades para a sua conta do google firebase.
 const firebaseConfig = {
     apiKey: "AIzaSyChsLLoz9YmGV6mHqphiBBIEEA47LYarUE",
     authDomain: "emmiter-ccca5.firebaseapp.com",
@@ -14,7 +12,7 @@ const firebaseConfig = {
     appId: "1:162850927442:web:9f9a17a0bf6cadd178808b"
 };
 
-// Iicializa o firebase
+// Inicializa o google firebase.
 const app = initializeApp(firebaseConfig);
 const firestore = getFirestore(app);
 export default firestore;

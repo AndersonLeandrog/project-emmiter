@@ -1,10 +1,11 @@
-import React, { useContext } from 'react';
-import { Text, TouchableOpacity } from 'react-native';
-import app from '../../../../../context';
+import React, { useContext } from "react";
+import { Text, TouchableOpacity } from "react-native";
 
-import Clipboard from '@react-native-clipboard/clipboard';
-import AntDesign from 'react-native-vector-icons/AntDesign';
-import colors from '../../../../config/colors';
+import app from "../../../../../context";
+
+import Clipboard from "@react-native-clipboard/clipboard";
+import AntDesign from "react-native-vector-icons/AntDesign";
+import colors from "../../../../config/colors";
 
 export default function Pix() {
    // Obtém os dados do contexto
@@ -22,11 +23,11 @@ export default function Pix() {
             style={{
                fontSize: 14,
                padding: 10,
-               color: colors.black,
+               color: colors.bk0,
                marginTop: 5,
-               backgroundColor: colors.whiteSmoke,
+               backgroundColor: colors.wh1,
             }}>
-            <AntDesign name='copy1' size={24} color={colors.black} />
+            <AntDesign name="copy1" size={24} color={colors.bk0} />
             {appSocialInfo.pixKey}
          </Text>
       </TouchableOpacity>

@@ -1,11 +1,17 @@
 import React, { useState, useEffect } from "react";
-import { Text, View, SafeAreaView, FlatList, TouchableOpacity } from 'react-native';
+import {
+   Text,
+   View,
+   SafeAreaView,
+   FlatList,
+   TouchableOpacity
+} from "react-native";
 
-import firestore from '../../config/firebase';
-import { collection, getDocs, getDoc, deleteDoc } from "firebase/firestore";
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import firestore from "../../config/firebase";
+import { collection, getDocs } from "firebase/firestore";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
-import AntDesign from 'react-native-vector-icons/AntDesign';
+import AntDesign from "react-native-vector-icons/AntDesign";
 import colors from "../../config/colors";
 import styles from "./style";
 
@@ -26,14 +32,14 @@ export default function UserList({ navigation }) {
          // armazena o número de usuários masculinos e femininos que já foram cadastrados no AsyncStorage
          usersData.forEach(async (number, index) => {
             const userBySex = usersData[index].gender;
-            if (userBySex === 'masculino' || userBySex === 'Masculino') {
-               await AsyncStorage.setItem('totalMasculineUsersNumber', String(index));
-            } else if (userBySex === 'feminino' || userBySex === 'Feminino') {
-               await AsyncStorage.setItem('totalFeminineUsersNumber', String(index));
+            if (userBySex === "masculino" || userBySex === "Masculino") {
+               await AsyncStorage.setItem("totalMasculineUsersNumber", String(index));
+            } else if (userBySex === "feminino" || userBySex === "Feminino") {
+               await AsyncStorage.setItem("totalFeminineUsersNumber", String(index));
             }
          });
       };
-      recoveryData('user');
+      recoveryData("user");
    }, []);
 
    // Envia o id do usuário selecionado para a tela de "Detalhes",
@@ -44,50 +50,62 @@ export default function UserList({ navigation }) {
    // a aplicação através do método getItem() do AsyncStorage
    async function sendDataToDetails(id) {
       try {
-         await AsyncStorage.setItem('id', id);
-         navigation.navigate('Details');
+         await AsyncStorage.setItem("id", id);
+         navigation.navigate("Details");
       } catch (error) {
-         console.log('Erro ao definir o id no AsyncStorage: ', error);
+         console.log("Erro ao definir o id no AsyncStorage: ", error);
       }
    };
 
    function loadList() {
       return (
-         <FlatList
-            data={recoveredData}
-            keyExtractor={item => item.id}
-            renderItem={({ item }) => (
-               <TouchableOpacity
-                  onPress={() => {
-                     sendDataToDetails(item.id);
-                  }}
-                  style={{
-                     width: '100%',
-                     marginTop: 15,
-                     display: 'flex',
-                     justifyContent: 'space-between',
-                     alignItems: 'center'
-                  }}
-               >
-                  <View style={styles.flatListContainer}>
-                     <View style={styles.iconContainer}>
-                        <AntDesign name='solution1' size={24} color={colors.black} />
-                     </View>
+         <>
+            <View style={{ width: "85%", marginTop: 50, display: "flex", flexDirection: "row" }}>
+               <View style={styles.boxInfo}>
+                  <AntDesign name="info" size={16} color={colors.wh0} />
+               </View>
 
-                     <View>
-                        <Text
-                           style={{
-                              color: colors.blue,
-                              paddingTop: 10,
-                              paddingLeft: 10
-                           }}>{'ID: ' + item.id}</Text>
-                        <Text style={{ paddingLeft: 10, paddingBottom: 10, color: colors.black }}>{'Nome: ' + item.name}</Text>
+               <Text style={styles.info}>
+                  {"Abaixo estão listados todos os usuários já cadastrados no aplicativo, toque sobre algum usuário para começar a gerenciar."}
+               </Text>
+            </View>
+
+            <FlatList
+               data={recoveredData}
+               keyExtractor={item => item.id}
+               renderItem={({ item }) => (
+                  <TouchableOpacity
+                     onPress={() => {
+                        sendDataToDetails(item.id);
+                     }}
+                     style={{
+                        width: "100%",
+                        marginTop: 5,
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "center"
+                     }}
+                  >
+                     <View style={styles.flatListContainer}>
+                        <View style={styles.iconContainer}>
+                           <AntDesign name="solution1" size={24} color={colors.bk0} />
+                        </View>
+
+                        <View>
+                           <Text
+                              style={{
+                                 color: colors.bl0,
+                                 paddingTop: 10,
+                                 paddingLeft: 10
+                              }}>{"ID: " + item.id}</Text>
+                           <Text style={{ paddingLeft: 10, paddingBottom: 10, color: colors.bk0 }}>{"Nome: " + item.name}</Text>
+                        </View>
                      </View>
-                  </View>
-               </TouchableOpacity>
-            )}
-            style={{ width: '90%', marginTop: 30 }}
-         />
+                  </TouchableOpacity>
+               )}
+               style={{ width: "90%", marginTop: 30 }}
+            />
+         </>
       )
    };
 
@@ -96,19 +114,19 @@ export default function UserList({ navigation }) {
       return (
          <View
             style={{
-               display: 'flex',
-               flexDirection: 'colunm',
-               justifyContent: 'center',
-               alignItems: 'center',
+               display: "flex",
+               flexDirection: "colunm",
+               justifyContent: "center",
+               alignItems: "center",
             }}
          >
-            <AntDesign name='meh' size={64} color={colors.black} />
-            <Text style={{ fontStyle: 'italic', color: colors.black, paddingTop: 25, textAlign: 'center' }}>
+            <AntDesign name="meh" size={64} color={colors.bk0} />
+            <Text style={{ fontStyle: "italic", color: colors.bk0, paddingTop: 25, textAlign: "center" }}>
                {
-                  'Não há nada aqui!\n' +
-                  'Para adicionar um usuário,\n' +
-                  'volte até a tela inicial e em (Atalhos)\n' +
-                  'toque em (Adicionar usuário)\n'
+                  "Não há nada aqui!\n" +
+                  "Para adicionar um usuário,\n" +
+                  "volte até a tela inicial e em (Atalhos)\n" +
+                  "toque em (Adicionar usuário)\n"
                }
             </Text>
          </View>
