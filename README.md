@@ -67,3 +67,6 @@ _Você pode baixar o arquivo .apk para android [https://github.com/AndersonLeand
 Google Firebase: 
   - O apk com.android.emmiter está vinculado a conta do desenvolvedor @andersonleandrog portanto todos os clientes que você cadastrar será
   inserido no firestorage do firebase na conta do mesmo, por esse motivo é recomendado que você siga a configuração para o seu negócio.  
+
+Licença:
+MIT
